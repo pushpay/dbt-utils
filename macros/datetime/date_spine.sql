@@ -17,10 +17,19 @@
 
 {%- endmacro %}
 
-
-
-
 {% macro date_spine(datepart, start_date, end_date) %}
+  {{ adapter_macro('dbt_utils.date_spine', datepart, start_date, end_date) }}
+{% endmacro %}
+
+
+{% macro postgres__date_spine(datepart, start_date, end_date) %}
+SELECT date_days::date 
+FROM   generate_series( {{start_date}}
+        ,  {{end_date}}
+        ,  '1 {{datepart}}') date_days
+{% endmacro %}
+
+{% macro default__date_spine(datepart, start_date, end_date) %}
 
 /*
 call as follows:
