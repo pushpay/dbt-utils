@@ -27,6 +27,10 @@
 
 {% macro postgres__datediff(first_date, second_date, datepart) %}
 
-    {{ exceptions.raise_compiler_error("macro datediff not implemented for this adapter") }}
+    scratch.DATEDIFF(
+        '{{ datepart }}',
+        {{ first_date }},
+        {{ second_date }}
+        )
 
 {% endmacro %}
